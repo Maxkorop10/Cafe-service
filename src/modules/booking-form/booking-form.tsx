@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/shared/ui/button";
 import {
   Card,
@@ -9,10 +11,26 @@ import {
 } from "@/shared/ui/card";
 import { Input } from "@/shared/ui/input";
 import { DatePicker } from "@/shared/ui/date-picker";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { bookingSchema, BookingSchema } from "@/modules/booking-form/schema";
 
 export function BookingForm() {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<BookingSchema>({
+    mode: "all",
+    resolver: zodResolver(bookingSchema),
+  });
+
+  const onSubmit = (data: BookingSchema) => {
+    console.log(data);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Card className="w-[400px] max-h-fit">
         <CardHeader>
           <CardTitle className="font-bold text-2xl text-gray-800 text-left">
@@ -24,20 +42,32 @@ export function BookingForm() {
         <CardContent>
           <p className="text-sm">Full Name</p>
           <Input
+            {...register("fullname")}
             className="border-gray-400"
             placeholder="Lisa Brown"
             id="fullname_input"
           />
+          {errors.fullname && (
+            <p className="text-red-500 text-sm mt-2">
+              {errors.fullname.message}
+            </p>
+          )}
         </CardContent>
 
         <CardContent className="flex flex-row gap-4">
           <div className="w-7/12">
             <p className="text-sm">Phone number</p>
             <Input
+              {...register("phone")}
               className="border-gray-400"
               placeholder="+380XXXXXXXXX"
-              id="phoneNumber_input"
+              id="phone_input"
             />
+            {errors.phone && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors.phone.message}
+              </p>
+            )}
           </div>
 
           <div className="w-5/12">
