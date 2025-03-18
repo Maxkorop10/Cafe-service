@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { NavBar } from "@/components/nav-bar";
+import NextTopLoader from "nextjs-toploader";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,8 +28,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
+        <NextTopLoader color="#0091ff" showSpinner={false} />
+        <Image
+          src="/cafe-back.jpeg"
+          alt="Background"
+          fill={true}
+          className="absolute -z-10 max-w-full max-h-full object-cover"
+          priority
+        />
+        <div className="absolute -z-10 inset-0 bg-black/25 backdrop-blur-sm"></div>
+        <NavBar />
         {children}
       </body>
     </html>
