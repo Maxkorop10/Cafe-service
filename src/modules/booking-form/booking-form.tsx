@@ -19,6 +19,7 @@ export function BookingForm() {
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm<BookingSchema>({
     mode: "all",
@@ -72,7 +73,14 @@ export function BookingForm() {
 
           <div className="w-5/12">
             <p className="text-sm">Data</p>
-            <DatePicker />
+            <DatePicker
+                onChange={(date) => setValue("date", date ?? new Date())}
+            />
+            {errors.date && (
+                <p className="text-red-500 text-sm mt-2">
+                  {errors.date.message}
+                </p>
+            )}
           </div>
         </CardContent>
 

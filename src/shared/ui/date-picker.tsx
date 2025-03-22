@@ -8,7 +8,7 @@ import { Button } from "./button";
 import { cn } from "../lib/utils";
 import { Calendar } from "./calendar";
 
-export function DatePicker() {
+export function DatePicker({ onChange }: { onChange: (date: Date | undefined) => void }) {
   const [date, setDate] = React.useState<Date>();
 
   return (
@@ -31,7 +31,10 @@ export function DatePicker() {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={(selectedDate) => {
+              setDate(selectedDate);
+              onChange(selectedDate);
+          }}
           initialFocus
         />
       </PopoverContent>
