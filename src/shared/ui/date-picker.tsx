@@ -8,7 +8,11 @@ import { Button } from "./button";
 import { cn } from "../lib/utils";
 import { Calendar } from "./calendar";
 
-export function DatePicker({ onChange }: { onChange: (date: Date | undefined) => void }) {
+export function DatePicker({
+  onChange,
+}: {
+  onChange: (date: Date | undefined) => void;
+}) {
   const [date, setDate] = React.useState<Date>();
 
   return (
@@ -32,8 +36,8 @@ export function DatePicker({ onChange }: { onChange: (date: Date | undefined) =>
           mode="single"
           selected={date}
           onSelect={(selectedDate) => {
-              setDate(selectedDate);
-              onChange(selectedDate);
+            setDate(selectedDate);
+            onChange(selectedDate);
           }}
           initialFocus
         />

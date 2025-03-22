@@ -74,12 +74,10 @@ export function BookingForm() {
           <div className="w-5/12">
             <p className="text-sm">Data</p>
             <DatePicker
-                onChange={(date) => setValue("date", date ?? new Date())}
+              onChange={(date) => setValue("date", date ?? new Date())}
             />
             {errors.date && (
-                <p className="text-red-500 text-sm mt-2">
-                  {errors.date.message}
-                </p>
+              <p className="text-red-500 text-sm mt-2">{errors.date.message}</p>
             )}
           </div>
         </CardContent>

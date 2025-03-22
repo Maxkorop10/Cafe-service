@@ -12,8 +12,8 @@ export const bookingSchema = z.object({
   phone: z.string().regex(/^\+380\d{9}$/, "Provide correct data"),
 
   date: z
-      .date({ required_error: "Date is required" })
-      .refine((date) => date >= new Date(), "Date must be in the future"),
+    .date({ required_error: "Date is required" })
+    .refine((date) => date >= new Date(), "Date must be in the future"),
 });
 
 export type BookingSchema = z.infer<typeof bookingSchema>;
