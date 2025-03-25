@@ -14,6 +14,7 @@ import { DatePicker } from "@/shared/ui/date-picker";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { bookingSchema, BookingSchema } from "@/modules/booking-form/schema";
+import TableSelector from "@/components/table-selector";
 
 export function BookingForm() {
   const {
@@ -85,35 +86,44 @@ export function BookingForm() {
         <CardContent className="flex flex-row gap-4">
           <div className="w-1/3">
             <p className="text-sm">Your table</p>
-            <Input
-              className="border-gray-400"
-              placeholder="Choose your table"
-              type="text"
-              inputMode="numeric"
-              id="summa_input"
-            />
+            <TableSelector onSelect={(tables) => setValue("tables", tables)} />
+            {errors.tables && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors.tables.message}
+              </p>
+            )}
           </div>
 
           <div className="w-1/3">
             <p className="text-sm">Start time</p>
             <Input
+              {...register("start_time")}
+              type="time"
               className="border-gray-400"
-              placeholder="Start"
-              type="text"
-              inputMode="numeric"
+              step="60"
               id="start_time"
             />
+            {errors.start_time && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors.start_time.message}
+              </p>
+            )}
           </div>
 
           <div className="w-1/3">
             <p className="text-sm">End time</p>
             <Input
+              {...register("end_time")}
+              type="time"
               className="border-gray-400"
-              placeholder="End"
-              type="text"
-              inputMode="numeric"
+              step="60"
               id="end_time"
             />
+            {errors.end_time && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors.end_time.message}
+              </p>
+            )}
           </div>
         </CardContent>
 
