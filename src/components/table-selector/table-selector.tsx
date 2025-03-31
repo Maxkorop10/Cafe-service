@@ -17,7 +17,7 @@ const TableSelector: FC<TableSelectorProps> = ({ onSelect }) => {
         ? prev.filter((table) => table !== id)
         : [...prev, id];
 
-      onSelect(newSelected); // Передаємо вибрані столи у форму
+      onSelect(newSelected);
       return newSelected;
     });
   };

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function CartPage() {
   return (
     <div className="py-4 px-5">
-      <p>Cart page!</p>
+      <p className="text-gray-50">Cart page!</p>
     </div>
   );
 }

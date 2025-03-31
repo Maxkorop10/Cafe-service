@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
+import { GoogleButton } from "@/components/google-button";
 
 export function NavBar() {
   const pathname = usePathname();
@@ -58,13 +59,15 @@ export function NavBar() {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
+          <DropdownMenuContent className="min-w-50 max-w-fit">
             <DropdownMenuLabel>Profile</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link href="/orders-page">Orders</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>Exit</DropdownMenuItem>
+            <DropdownMenuItem>
+              <GoogleButton />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

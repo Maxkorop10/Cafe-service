@@ -4,6 +4,7 @@ import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import NextTopLoader from "nextjs-toploader";
 import Image from "next/image";
+import Providers from "@/app/api/auth/providers/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,8 +40,10 @@ export default function RootLayout({
           priority
         />
         <div className="absolute -z-10 inset-0 bg-black/25 backdrop-blur-sm"></div>
-        <NavBar />
-        {children}
+        <Providers>
+          <NavBar />
+          {children}
+        </Providers>
       </body>
     </html>
   );

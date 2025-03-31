@@ -62,7 +62,7 @@ function Calendar({
         day_range_end:
           "day-range-end aria-selected:bg-primary aria-selected:text-primary-foreground",
         day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+          "bg-black text-white hover:bg-black hover:text-white focus:bg-black focus:text-white",
         day_today: "bg-accent text-accent-foreground",
         day_outside:
           "day-outside text-muted-foreground aria-selected:text-muted-foreground",
@@ -73,11 +73,15 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("size-4", className)} {...props} />
+        PreviousMonthButton: ({ className, ...props }) => (
+          <button className={cn("absolute left-1", className)} {...props}>
+            <ChevronLeft className="size-4" />
+          </button>
         ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("size-4", className)} {...props} />
+        NextMonthButton: ({ className, ...props }) => (
+          <button className={cn("absolute right-1", className)} {...props}>
+            <ChevronRight className="size-4" />
+          </button>
         ),
       }}
       {...props}
