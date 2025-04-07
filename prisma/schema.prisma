@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  bookings      Booking[]
+  orders        Order[]
+  role          Role      @default(USER)
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Menu {
+  id          Int         @id @default(autoincrement())
+  meal_name   String
+  meal_class  String
+  description String
+  meal_type   String
+  weight      Int
+  price       Int
+  orderItems  OrderItem[]
+}
+
+model Tables {
+  id            Int            @id @default(autoincrement())
+  price         Float
+  capacity      Int
+  bookingTables BookingTable[]
+}
+
+model Booking {
+  id           Int           @id @default(autoincrement())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  fullname     String
+  phone_number String
+  totalPrice   Float
+  startTime    DateTime
+  endTime      DateTime
+  status       BookingStatus @default(CREATED)
+
+  bookingTables BookingTable[]
+  orders        Order[]
+}
+
+model BookingTable {
+  id        Int @id @default(autoincrement())
+  bookingId Int
+  tableId   Int
+
+  booking Booking @relation(fields: [bookingId], references: [id])
+  table   Tables  @relation(fields: [tableId], references: [id])
+
+  @@unique([bookingId, tableId])
+  @@index([tableId])
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  userId       String
+  fullname     String
+  phone_number String
+  status       OrderStatus @default(CREATED)
+  type         OrderType
+  totalPrice   Float
+  createdAt    DateTime    @default(now())
+
+  bookingId Int?     @map("booking_id")
+  booking   Booking? @relation(fields: [bookingId], references: [id])
+
+  User       User        @relation(fields: [userId], references: [id])
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id       Int   @id @default(autoincrement())
+  orderId  Int
+  order    Order @relation(fields: [orderId], references: [id])
+  menuId   Int
+  menu     Menu  @relation(fields: [menuId], references: [id])
+  quantity Int   @default(1)
+}
+
+enum Role {
+  USER
+  ADMIN
+  MANAGER
+}
+
+enum BookingStatus {
+  CREATED
+  CANCELLED
+}
+
+enum OrderStatus {
+  CREATED
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+
+enum OrderType {
+  TAKEAWAY
+  TABLE
+}
