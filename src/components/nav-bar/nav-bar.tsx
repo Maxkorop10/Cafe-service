@@ -12,15 +12,49 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 import { GoogleButton } from "@/components/google-button";
+import { useSession } from "next-auth/react";
 
 export function NavBar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const role = session?.user?.role ?? "USER";
 
-  const navItems = [
-    { name: "Menu", href: "/menu-page" },
-    { name: "Cart", href: "/cart-page" },
-    { name: "Booking", href: "/booking-page" },
-  ];
+  const navItems = {
+    USER: [
+      { name: "Menu", href: "/menu-page" },
+      { name: "Cart", href: "/cart-page" },
+      { name: "Booking", href: "/booking-page" },
+    ],
+    ADMIN: [
+      { name: "Orders", href: "/waiter-orders" },
+      { name: "Booking", href: "/waiter-bookings" },
+    ],
+    MANAGER: [
+      { name: "Menu", href: "/manager-menu" },
+      { name: "Statistics", href: "/manager-stats" },
+    ],
+  };
+
+  const dropdownItems = {
+    USER: [
+      <DropdownMenuItem key="orders">
+        <Link href="/orders-page">Orders</Link>
+      </DropdownMenuItem>,
+      <DropdownMenuItem key="logout">
+        <GoogleButton />
+      </DropdownMenuItem>,
+    ],
+    ADMIN: [
+      <DropdownMenuItem key="logout">
+        <GoogleButton />
+      </DropdownMenuItem>,
+    ],
+    MANAGER: [
+      <DropdownMenuItem key="logout">
+        <GoogleButton />
+      </DropdownMenuItem>,
+    ],
+  };
 
   return (
     <nav className="flex justify-between items-center p-4 text-white bg-black/55 backdrop-filter backdrop-blur-lg bg-opacity-30 border-b border-gray-500 firefox:bg-opacity-90">
@@ -42,11 +76,15 @@ export function NavBar() {
       </div>
 
       <div className="flex items-center space-x-6 ml-auto text-[18px]">
-        {navItems.map((item) => (
+        {navItems[role].map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className={`${pathname === item.href ? "text-blue-500 font-semibold" : "text-slate-200 hover:text-white"}`}
+            className={`${
+              pathname === item.href
+                ? "text-blue-500 font-semibold"
+                : "text-slate-200 hover:text-white"
+            }`}
           >
             {item.name}
           </Link>
@@ -62,12 +100,7 @@ export function NavBar() {
           <DropdownMenuContent className="min-w-50 max-w-fit">
             <DropdownMenuLabel>Profile</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href="/orders-page">Orders</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <GoogleButton />
-            </DropdownMenuItem>
+            {dropdownItems[role]}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
