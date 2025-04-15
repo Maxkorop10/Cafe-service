@@ -63,6 +63,7 @@ model Session {
 model Menu {
   id          Int         @id @default(autoincrement())
   meal_name   String
+  imageUrl    String?
   meal_class  String
   description String
   meal_type   String

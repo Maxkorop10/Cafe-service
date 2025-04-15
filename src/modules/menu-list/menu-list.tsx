@@ -1,7 +1,37 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import MenuBox from "@/components/menu-box";
 
+type MenuItem = {
+  id: number;
+  meal_name: string;
+  imageUrl: string;
+  description: string;
+  weight: number;
+  price: number;
+};
+
 export function MenuList() {
+  const [menuData, setMenuData] = useState<Record<string, MenuItem[]>>({
+    meals: [],
+    drinks: [],
+    wine: [],
+  });
+
+  const fetchMenu = async (type: string, key: string) => {
+    const res = await fetch(`/api/menu?class=${type}`);
+    const data = await res.json();
+    setMenuData((prev) => ({ ...prev, [key]: data }));
+  };
+
+  useEffect(() => {
+    fetchMenu("Meal", "meals");
+    fetchMenu("Drink", "drinks");
+    fetchMenu("Wine", "wine");
+  }, []);
+
   return (
     <Tabs defaultValue="meals" className="w-[700px]">
       <TabsList className="grid w-full grid-cols-3">
@@ -10,34 +40,43 @@ export function MenuList() {
         <TabsTrigger value="wine">Wine</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="meals" className="flex justify-between items-center">
-        <MenuBox
-          icon={"/interior-1.jpg"}
-          title="Борщ"
-          description="Бульйон, буряк, філе куряче, квасоля, картопля, капуста, морква, зелень та сметана."
-          weight={100}
-          price={120}
-        />
+      <TabsContent value="meals" className="flex flex-col gap-3">
+        {menuData.meals.map((item) => (
+          <MenuBox
+            key={item.id}
+            icon={item.imageUrl || "/placeholder.jpg"}
+            title={item.meal_name}
+            description={item.description}
+            weight={item.weight}
+            price={item.price}
+          />
+        ))}
       </TabsContent>
 
-      <TabsContent value="drinks">
-        <MenuBox
-          icon={"/interior-1.jpg"}
-          title="Еспресо"
-          description="Кава 80% арабіки та 20% робусти. Розбавлено молоком коров'ячим пастеризов."
-          weight={100}
-          price={120}
-        />
+      <TabsContent value="drinks" className="flex flex-col gap-3">
+        {menuData.drinks.map((item) => (
+          <MenuBox
+            key={item.id}
+            icon={item.imageUrl || "/placeholder.jpg"}
+            title={item.meal_name}
+            description={item.description}
+            weight={item.weight}
+            price={item.price}
+          />
+        ))}
       </TabsContent>
 
-      <TabsContent value="wine">
-        <MenuBox
-          icon={"/interior-1.jpg"}
-          title="Шампанське"
-          description="Вино ігристе. Франція, регіон Шампань. 1981 рік."
-          weight={100}
-          price={120}
-        />
+      <TabsContent value="wine" className="flex flex-col gap-3">
+        {menuData.wine.map((item) => (
+          <MenuBox
+            key={item.id}
+            icon={item.imageUrl || "/placeholder.jpg"}
+            title={item.meal_name}
+            description={item.description}
+            weight={item.weight}
+            price={item.price}
+          />
+        ))}
       </TabsContent>
     </Tabs>
   );
