@@ -125,7 +125,7 @@ export function CartPaymentForm() {
               className="w-full"
               disabled={selectedIndex === null || !isValid}
             >
-              Оплатити
+              Pay
             </Button>
           </DialogClose>
         </CardFooter>

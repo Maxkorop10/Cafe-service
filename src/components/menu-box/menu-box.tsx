@@ -50,7 +50,7 @@ const MenuBox: FC<MenuBoxProps> = ({
           <p className="text-gray-600 text-sm leading-tight w-full">
             {description}
           </p>
-          <span className="text-gray-500 text-sm">Вага: {weight} г</span>
+          <span className="text-gray-500 text-sm">Weight: {weight} г</span>
         </div>
 
         <div className="flex flex-col text-right mt-7 px-2">
@@ -64,7 +64,7 @@ const MenuBox: FC<MenuBoxProps> = ({
                 : "bg-blue-500 hover:bg-blue-600"
             }`}
           >
-            {isInCart ? "У кошику" : "Замовити"}
+            {isInCart ? "In Cart" : "Order"}
           </Button>
         </div>
       </div>
