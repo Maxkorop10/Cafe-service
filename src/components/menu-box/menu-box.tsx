@@ -1,15 +1,36 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "@/shared/ui/button";
 import { MenuBoxProps } from "@/components/menu-box/types";
 import { FC } from "react";
+import { useCartStore } from "@/shared/lib/store/cart-store";
 
 const MenuBox: FC<MenuBoxProps> = ({
+  id,
   icon,
   title,
   description,
   weight,
   price,
 }) => {
+  const addItem = useCartStore((state) => state.addItem);
+  const items = useCartStore((state) => state.items);
+
+  const isInCart = items.some((item) => item.id === id);
+
+  const handleAddToCart = () => {
+    if (!isInCart) {
+      addItem({
+        id,
+        title,
+        price,
+        weight,
+        imageUrl: icon,
+      });
+    }
+  };
+
   return (
     <div className="w-[700px] bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
       <div className="flex p-2 gap-5 items-center">
@@ -18,7 +39,7 @@ const MenuBox: FC<MenuBoxProps> = ({
             src={icon}
             alt="Food Image"
             fill={true}
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="128px"
             className="object-cover"
             priority
           />
@@ -34,8 +55,16 @@ const MenuBox: FC<MenuBoxProps> = ({
 
         <div className="flex flex-col text-right mt-7 px-2">
           <span className="text-lg font-bold text-gray-900">{price} грн.</span>
-          <Button className="mt-1 w-25 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-            Замовити
+          <Button
+            onClick={handleAddToCart}
+            disabled={isInCart}
+            className={`mt-1 w-25 px-4 py-2 rounded-lg text-white transition-colors ${
+              isInCart
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600"
+            }`}
+          >
+            {isInCart ? "У кошику" : "Замовити"}
           </Button>
         </div>
       </div>

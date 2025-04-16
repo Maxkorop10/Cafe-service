@@ -44,6 +44,7 @@ export function MenuList() {
         {menuData.meals.map((item) => (
           <MenuBox
             key={item.id}
+            id={item.id}
             icon={item.imageUrl || "/placeholder.jpg"}
             title={item.meal_name}
             description={item.description}
@@ -57,6 +58,7 @@ export function MenuList() {
         {menuData.drinks.map((item) => (
           <MenuBox
             key={item.id}
+            id={item.id}
             icon={item.imageUrl || "/placeholder.jpg"}
             title={item.meal_name}
             description={item.description}
@@ -70,6 +72,7 @@ export function MenuList() {
         {menuData.wine.map((item) => (
           <MenuBox
             key={item.id}
+            id={item.id}
             icon={item.imageUrl || "/placeholder.jpg"}
             title={item.meal_name}
             description={item.description}
