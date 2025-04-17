@@ -13,7 +13,7 @@ const BankPicker: FC<BankPickerProps> = ({ selectedIndex, onChange }) => {
   ];
 
   return (
-    <div className="flex flex-row w-full justify-between">
+    <div className="flex flex-row w-[290px] justify-between">
       {paymentLogos.map((logo, index) => (
         <div
           key={index}

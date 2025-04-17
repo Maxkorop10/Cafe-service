@@ -5,6 +5,7 @@ import { NavBar } from "@/components/nav-bar";
 import NextTopLoader from "nextjs-toploader";
 import Image from "next/image";
 import Providers from "@/app/api/auth/providers/providers";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
         <Providers>
           <NavBar />
           {children}
+          <Toaster position="top-right" richColors />
         </Providers>
       </body>
     </html>

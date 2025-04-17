@@ -15,20 +15,76 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { bookingSchema, BookingSchema } from "@/modules/booking-form/schema";
 import TableSelector from "@/components/table-selector";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import BankPicker from "@/components/bank-picker";
+import { toast } from "sonner";
 
 export function BookingForm() {
+  const { data: session } = useSession();
+  const user_name = session?.user?.name;
+  const [totalSum, setTotalSum] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const {
     handleSubmit,
     register,
     setValue,
-    formState: { errors },
+    reset,
+    formState: { errors, isValid },
   } = useForm<BookingSchema>({
     mode: "all",
     resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      fullname: "",
+    },
   });
 
-  const onSubmit = (data: BookingSchema) => {
-    console.log(data);
+  const handleTableSelect = (tables: number[], prices: number[]) => {
+    setValue("tables", tables);
+    const sum = prices.reduce((acc, price) => acc + price, 0);
+    setTotalSum(sum);
+  };
+
+  useEffect(() => {
+    if (user_name) {
+      reset({ fullname: user_name });
+    }
+  }, [user_name, reset]);
+
+  const onSubmit = async (data: BookingSchema) => {
+    try {
+      const response = await fetch("/api/create-booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session?.user?.id,
+          fullname: data.fullname,
+          phone: data.phone,
+          totalSum,
+          date: data.date.toISOString().split("T")[0],
+          start_time: data.start_time,
+          end_time: data.end_time,
+          tables: data.tables,
+        }),
+      });
+
+      const resData = await response.json();
+
+      if (!response.ok) {
+        toast.error(resData.error || "❌ Booking failed");
+        return;
+      }
+
+      toast.success("✅ Booking successful!", {
+        description: `Your table is reserved for ${data.date.toLocaleDateString()} at ${data.start_time}.`,
+      });
+      reset();
+    } catch (error) {
+      console.error("Error submitting booking:", error);
+      toast.error("Unexpected error occurred.");
+    }
   };
 
   return (
@@ -40,6 +96,13 @@ export function BookingForm() {
           </CardTitle>
           <CardDescription>Book your table</CardDescription>
         </CardHeader>
+
+        <CardContent className="flex justify-center items-center">
+          <BankPicker
+            selectedIndex={selectedIndex}
+            onChange={setSelectedIndex}
+          />
+        </CardContent>
 
         <CardContent>
           <p className="text-sm">Full Name</p>
@@ -86,7 +149,7 @@ export function BookingForm() {
         <CardContent className="flex flex-row gap-4">
           <div className="w-1/3">
             <p className="text-sm">Your table</p>
-            <TableSelector onSelect={(tables) => setValue("tables", tables)} />
+            <TableSelector onSelect={handleTableSelect} />
             {errors.tables && (
               <p className="text-red-500 text-sm mt-2">
                 {errors.tables.message}
@@ -129,12 +192,16 @@ export function BookingForm() {
 
         <CardContent>
           <p className="text-black text-right text-lg font-medium">
-            Total sum: X грн
+            Total sum: {totalSum} грн
           </p>
         </CardContent>
 
         <CardFooter>
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={selectedIndex === null || !isValid}
+          >
             Book
           </Button>
         </CardFooter>

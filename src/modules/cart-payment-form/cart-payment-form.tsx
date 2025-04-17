@@ -44,7 +44,7 @@ export function CartPaymentForm() {
           <DialogDescription>Оберіть спосіб оплати</DialogDescription>
         </CardHeader>
 
-        <CardContent className="px-6">
+        <CardContent className="px-6 flex justify-center items-center">
           <BankPicker
             selectedIndex={selectedIndex}
             onChange={setSelectedIndex}

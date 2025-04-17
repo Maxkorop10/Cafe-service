@@ -86,6 +86,7 @@ model Booking {
   fullname     String
   phone_number String
   totalPrice   Float
+  date         DateTime
   startTime    DateTime
   endTime      DateTime
   status       BookingStatus @default(CREATED)

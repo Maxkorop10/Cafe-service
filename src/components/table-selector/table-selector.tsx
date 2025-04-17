@@ -1,30 +1,54 @@
 "use client";
 
-import { FC, useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
-import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
-import { TableSelectorProps } from "@/components/table-selector/types";
+import { Button } from "@/shared/ui/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/shared/ui/hover-card";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
+import { FC, useEffect, useState } from "react";
 
-const tables = Array.from({ length: 8 }, (_, i) => i + 1);
+type Table = {
+  id: number;
+  capacity: number;
+  price: number;
+};
+
+interface TableSelectorProps {
+  onSelect: (tables: number[], prices: number[]) => void;
+}
 
 const TableSelector: FC<TableSelectorProps> = ({ onSelect }) => {
   const [selectedTables, setSelectedTables] = useState<number[]>([]);
+  const [tables, setTables] = useState<Table[]>([]);
+
+  useEffect(() => {
+    const fetchTables = async () => {
+      try {
+        const res = await fetch("/api/tables-info");
+        const data: Table[] = await res.json();
+        setTables(data);
+      } catch (error) {
+        console.error("Failed to load tables-info", error);
+      }
+    };
+    fetchTables();
+  }, []);
+
+  useEffect(() => {
+    const selectedPrices = tables
+      .filter((table) => selectedTables.includes(table.id))
+      .map((table) => table.price);
+
+    onSelect(selectedTables, selectedPrices);
+  }, [selectedTables, tables, onSelect]);
 
   const toggleTable = (id: number) => {
-    setSelectedTables((prev) => {
-      const newSelected = prev.includes(id)
-        ? prev.filter((table) => table !== id)
-        : [...prev, id];
-
-      onSelect(newSelected);
-      return newSelected;
-    });
+    setSelectedTables((prev) =>
+      prev.includes(id) ? prev.filter((table) => table !== id) : [...prev, id],
+    );
   };
 
   return (
@@ -42,24 +66,23 @@ const TableSelector: FC<TableSelectorProps> = ({ onSelect }) => {
       <PopoverContent className="w-64 p-4">
         <div className="border border-gray-400 p-2 grid grid-cols-4 gap-2">
           {tables.map((table) => (
-            <HoverCard key={table}>
+            <HoverCard key={table.id}>
               <HoverCardTrigger asChild>
                 <div
-                  key={table}
                   className={cn(
                     "w-10 h-10 flex items-center justify-center border rounded cursor-pointer",
-                    selectedTables.includes(table)
+                    selectedTables.includes(table.id)
                       ? "bg-blue-500 text-white"
                       : "bg-gray-300",
                   )}
-                  onClick={() => toggleTable(table)}
+                  onClick={() => toggleTable(table.id)}
                 >
-                  {table}
+                  {table.id}
                 </div>
               </HoverCardTrigger>
               <HoverCardContent className="w-fit h-fit">
-                <p>Capacity:</p>
-                <p>Price:</p>
+                <p>Capacity: {table.capacity}</p>
+                <p>Price: {table.price}₴</p>
               </HoverCardContent>
             </HoverCard>
           ))}
