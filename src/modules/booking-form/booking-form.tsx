@@ -127,6 +127,12 @@ export function BookingForm() {
           </div>
         </CardContent>
 
+        <CardContent>
+          <p className="text-black text-right text-lg font-medium">
+            Total sum: X грн
+          </p>
+        </CardContent>
+
         <CardFooter>
           <Button type="submit" className="w-full">
             Book
