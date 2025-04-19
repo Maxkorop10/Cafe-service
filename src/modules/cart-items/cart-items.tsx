@@ -6,7 +6,7 @@ import { Trash2 } from "lucide-react";
 import { Separator } from "@/shared/ui/separator";
 import { Button } from "@/shared/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/shared/ui/dialog";
-import { CartPaymentForm } from "@/modules/cart-payment-form";
+import CartPaymentForm from "@/modules/cart-payment-form";
 
 export function CartItems() {
   const items = useCartStore((state) => state.items);
@@ -85,7 +85,7 @@ export function CartItems() {
           </Button>
         </DialogTrigger>
         <DialogContent className="p-0 sm:max-w-sm">
-          <CartPaymentForm />
+          <CartPaymentForm totalPrice={totalPrice} items={items} />
         </DialogContent>
       </Dialog>
     </div>

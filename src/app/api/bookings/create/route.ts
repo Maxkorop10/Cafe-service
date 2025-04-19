@@ -15,11 +15,9 @@ export async function POST(req: NextRequest) {
       tables,
     } = body;
 
-    // Конвертуємо дату і час до повних Date-об’єктів
     const startTime = new Date(`${date}T${start_time}`);
     const endTime = new Date(`${date}T${end_time}`);
 
-    // Перевіряємо кожен стіл на конфлікти
     const conflicts = await prisma.bookingTable.findMany({
       where: {
         tableId: { in: tables },
@@ -40,7 +38,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Створюємо бронювання та пов’язані таблиці
     const booking = await prisma.booking.create({
       data: {
         userId,

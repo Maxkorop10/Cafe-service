@@ -19,6 +19,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import BankPicker from "@/components/bank-picker";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function BookingForm() {
   const { data: session } = useSession();
@@ -45,6 +46,7 @@ export function BookingForm() {
     setTotalSum(sum);
   };
 
+  const router = useRouter();
   useEffect(() => {
     if (user_name) {
       reset({ fullname: user_name });
@@ -53,7 +55,7 @@ export function BookingForm() {
 
   const onSubmit = async (data: BookingSchema) => {
     try {
-      const response = await fetch("/api/create-booking", {
+      const response = await fetch("/api/bookings/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,6 +81,10 @@ export function BookingForm() {
 
       toast.success("✅ Booking successful!", {
         description: `Your table is reserved for ${data.date.toLocaleDateString()} at ${data.start_time}.`,
+        action: {
+          label: "View",
+          onClick: () => router.push("/orders-page"),
+        },
       });
       reset();
     } catch (error) {

@@ -1,1 +1,1 @@
-export * from "./cart-payment-form";
+export { default } from "./cart-payment-form";
