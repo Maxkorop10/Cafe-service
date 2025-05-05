@@ -3,6 +3,15 @@
 import WaiterBookingBox from "@/components/waiter-booking-box";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { useEffect, useState } from "react";
+import { Button } from "@/shared/ui/button";
+import { PlusCircle } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/shared/ui/dialog";
+import { BookingForm } from "@/modules/booking-form";
 
 type Booking = {
   id: number;
@@ -57,19 +66,34 @@ export function WaiterBookingList() {
       ));
 
   return (
-    <Tabs defaultValue="meals" className="w-[590px]">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="new">New</TabsTrigger>
-        <TabsTrigger value="cancelled">Cancelled</TabsTrigger>
-      </TabsList>
+    <div className="flex flex-col-2 gap-2">
+      <Tabs defaultValue="meals" className="w-[590px]">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="new">New</TabsTrigger>
+          <TabsTrigger value="cancelled">Cancelled</TabsTrigger>
+        </TabsList>
 
-      <TabsContent value="new" className="flex flex-col gap-3">
-        {renderBookingsByStatus("CREATED")}
-      </TabsContent>
+        <TabsContent value="new" className="flex flex-col gap-3">
+          {renderBookingsByStatus("CREATED")}
+        </TabsContent>
 
-      <TabsContent value="cancelled" className="flex flex-col gap-3">
-        {renderBookingsByStatus("CANCELLED")}
-      </TabsContent>
-    </Tabs>
+        <TabsContent value="cancelled" className="flex flex-col gap-3">
+          {renderBookingsByStatus("CANCELLED")}
+        </TabsContent>
+      </Tabs>
+
+      <Dialog modal={false}>
+        <DialogTrigger asChild>
+          <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
+            <PlusCircle className="h-5 w-5" />
+            Add new
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="p-0 sm:max-w-sm z-50 bg-transparent shadow-none border-0">
+          <DialogTitle className="sr-only">Create new booking</DialogTitle>
+          <BookingForm />
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }

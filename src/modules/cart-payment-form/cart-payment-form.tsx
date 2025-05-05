@@ -64,7 +64,7 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
 
     const fetchBookings = async () => {
       try {
-        const res = await fetch("/api/bookings/by-user");
+        const res = await fetch("/api/bookings/to-order");
         const data = await res.json();
         setBookings(data);
       } catch (err) {

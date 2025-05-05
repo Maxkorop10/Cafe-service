@@ -36,7 +36,7 @@ const WaiterBookingBox: FC<BookingBoxProps> = ({
         body: JSON.stringify({ bookingId, newStatus }),
       });
 
-      toast.success("🥗 Booking status is updated!");
+      toast.success("📜 Booking status is updated!");
 
       if (!res.ok) throw new Error("Failed to update status");
     } catch (error) {
