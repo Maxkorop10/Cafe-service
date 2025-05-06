@@ -3,6 +3,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import WaiterOrderBox from "@/components/waiter-order-box";
 import { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/shared/ui/dialog";
+import WaiterOrderDialog from "@/components/waiter-order-dialog";
 
 type Order = {
   id: number;
@@ -14,8 +22,20 @@ type Order = {
   bookingId?: number | null;
 };
 
+type OrderDetails = {
+  id: number;
+  totalPrice: number;
+  items: {
+    mealName: string;
+    mealImg: string;
+    quantity: number;
+    price: number;
+  }[];
+};
+
 export function WaiterOrdersList() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -31,27 +51,78 @@ export function WaiterOrdersList() {
     fetchOrders();
   }, []);
 
+  const fetchOrderDetails = async (orderId: number) => {
+    try {
+      const res = await fetch(`/api/orders/order-details/${orderId}`);
+      const data = await res.json();
+      setOrderDetails(data);
+    } catch (error) {
+      console.error("❌ Failed to fetch order details", error);
+    }
+  };
+
   const renderOrdersByStatus = (status: Order["status"]) =>
     orders
       .filter((order) => order.status === status)
       .map((order) => (
-        <WaiterOrderBox
-          key={order.id}
-          id={order.id}
-          fullname={order.fullname}
-          phone={order.phone_number}
-          status={order.status}
-          type={order.type}
-          booking_id={order.bookingId ?? undefined}
-          price={order.totalPrice}
-          in_process={order.status === "CREATED"}
-          completed={
-            order.status === "IN_PROGRESS" || order.status === "CREATED"
-          }
-          rejected={
-            order.status === "IN_PROGRESS" || order.status === "CREATED"
-          }
-        />
+        // <WaiterOrderBox
+        //   key={order.id}
+        //   id={order.id}
+        //   fullname={order.fullname}
+        //   phone={order.phone_number}
+        //   status={order.status}
+        //   type={order.type}
+        //   booking_id={order.bookingId ?? undefined}
+        //   price={order.totalPrice}
+        //   in_process={order.status === "CREATED"}
+        //   completed={
+        //     order.status === "IN_PROGRESS" || order.status === "CREATED"
+        //   }
+        //   rejected={
+        //     order.status === "IN_PROGRESS" || order.status === "CREATED"
+        //   }
+        // />
+
+        <Dialog key={order.id} modal={false}>
+          <DialogTrigger asChild>
+            <div onClick={() => fetchOrderDetails(order.id)}>
+              <WaiterOrderBox
+                key={order.id}
+                id={order.id}
+                fullname={order.fullname}
+                phone={order.phone_number}
+                status={order.status}
+                type={order.type}
+                booking_id={order.bookingId ?? undefined}
+                price={order.totalPrice}
+                in_process={order.status === "CREATED"}
+                completed={
+                  order.status === "IN_PROGRESS" || order.status === "CREATED"
+                }
+                rejected={
+                  order.status === "IN_PROGRESS" || order.status === "CREATED"
+                }
+              />
+            </div>
+          </DialogTrigger>
+          <DialogContent className="p-0 sm:max-w-sm z-50 bg-transparent shadow-none border-0">
+            <DialogTitle className="sr-only">Order details</DialogTitle>
+            <DialogDescription className="sr-only">
+              Список страв у замовленні
+            </DialogDescription>
+            {orderDetails && orderDetails.id === order.id && (
+              <WaiterOrderDialog
+                orderId={orderDetails.id}
+                items={orderDetails.items.map((item) => ({
+                  meal_img: item.mealImg,
+                  meal_name: item.mealName,
+                  quantity: item.quantity,
+                  price: item.price,
+                }))}
+              />
+            )}
+          </DialogContent>
+        </Dialog>
       ));
 
   return (

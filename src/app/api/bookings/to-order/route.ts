@@ -1,5 +1,3 @@
-// /src/app/api/bookings/get-upcoming-created/route.ts
-
 import { NextResponse, NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { prisma } from "@/shared/lib/prisma";
@@ -17,14 +15,14 @@ export async function GET(req: Request) {
 
   try {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // обрізаємо час, залишаємо тільки дату
+    today.setHours(0, 0, 0, 0);
 
     const bookings = await prisma.booking.findMany({
       where: {
         userId: token.sub,
         status: "CREATED",
         date: {
-          gte: today, // >= сьогодні
+          gte: today,
         },
       },
       orderBy: {
