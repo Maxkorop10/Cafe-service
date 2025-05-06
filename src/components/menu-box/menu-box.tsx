@@ -32,7 +32,7 @@ const MenuBox: FC<MenuBoxProps> = ({
   };
 
   return (
-    <div className="w-[700px] bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+    <div className="w-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
       <div className="flex p-2 gap-5 items-center">
         <div className="relative w-32 h-32 rounded-xl overflow-hidden border border-gray-300">
           <Image

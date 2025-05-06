@@ -7,6 +7,7 @@ import { Separator } from "@/shared/ui/separator";
 import { Button } from "@/shared/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/shared/ui/dialog";
 import CartPaymentForm from "@/modules/cart-payment-form";
+import { ScrollArea } from "@/shared/ui/scroll-area";
 
 export function CartItems() {
   const items = useCartStore((state) => state.items);
@@ -24,49 +25,60 @@ export function CartItems() {
           The Cart is empty
         </p>
       )}
-      {items.map((item) => (
-        <div
-          key={item.id}
-          className="flex items-center justify-between bg-white p-2 rounded-2xl shadow-md hover:shadow-lg transition"
-        >
-          <div className="flex items-center gap-5">
-            <div className="relative w-24 h-24 rounded-xl overflow-hidden border">
-              <Image
-                src={item.imageUrl}
-                alt={item.title}
-                fill
-                sizes="96px"
-                className="object-cover"
-                priority
-              />
-            </div>
-            <div>
-              <h4 className="font-semibold text-lg text-gray-800">
-                {item.title}
-              </h4>
-              <p className="text-sm text-gray-500">
-                {item.weight} г • {item.price} грн
-              </p>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-3 p-1">
-            <input
-              type="number"
-              value={item.quantity}
-              min={1}
-              onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
-              className="w-16 text-center border border-gray-300 rounded-lg px-3 py-1.5 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
-            />
-            <button
-              onClick={() => removeItem(item.id)}
-              className="border border-red-500 rounded-lg p-2 text-red-600 hover:bg-red-100 hover:border-red-600 hover:text-red-800 shadow-sm hover:shadow-md transition duration-200"
+      <ScrollArea
+        className={`w-full rounded-2xl border transition-all duration-300 ${
+          items.length === 0 ? "h-0" : "h-[350px]"
+        }`}
+      >
+        <div className="flex flex-col gap-2 p-2 mr-2">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center justify-between bg-white p-2 rounded-2xl shadow-md hover:shadow-lg transition"
             >
-              <Trash2 size={20} />
-            </button>
-          </div>
+              <div className="flex items-center gap-5">
+                <div className="relative w-24 h-24 rounded-xl overflow-hidden border">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.title}
+                    fill
+                    sizes="96px"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-lg text-gray-800">
+                    {item.title}
+                  </h4>
+                  <p className="text-sm text-gray-500">
+                    {item.weight} г • {item.price} грн
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-1">
+                <input
+                  type="number"
+                  value={item.quantity}
+                  min={1}
+                  onChange={(e) =>
+                    updateQuantity(item.id, Number(e.target.value))
+                  }
+                  className="w-16 text-center border border-gray-300 rounded-lg px-3 py-1.5 text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
+                />
+                <button
+                  onClick={() => removeItem(item.id)}
+                  className="border border-red-500 rounded-lg p-2 text-red-600 hover:bg-red-100 hover:border-red-600 hover:text-red-800 shadow-sm hover:shadow-md transition duration-200"
+                >
+                  <Trash2 size={20} />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      </ScrollArea>
 
       <Separator />
       <p className="text-white text-right text-lg font-medium">

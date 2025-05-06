@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import OrderBox from "@/components/order-box";
 import BookingBox from "@/components/booking-box/booking-box";
+import { ScrollArea } from "@/shared/ui/scroll-area";
 
 interface Order {
   id: number;
@@ -72,35 +73,43 @@ export function OrderingList() {
       </TabsList>
 
       <TabsContent value="orders" className="flex flex-col gap-3">
-        {orders.map((order) => (
-          <OrderBox
-            key={order.id}
-            id={order.id}
-            fullname={order.fullname}
-            phone={order.phone_number}
-            status={order.status}
-            type={order.type}
-            booking_id={order.bookingId ?? undefined}
-            price={order.totalPrice}
-          />
-        ))}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {orders.map((order) => (
+              <OrderBox
+                key={order.id}
+                id={order.id}
+                fullname={order.fullname}
+                phone={order.phone_number}
+                status={order.status}
+                type={order.type}
+                booking_id={order.bookingId ?? undefined}
+                price={order.totalPrice}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       </TabsContent>
 
       <TabsContent value="bookings" className="flex flex-col gap-3">
-        {bookings.map((booking) => (
-          <BookingBox
-            key={booking.id}
-            id={booking.id}
-            fullname={booking.fullname}
-            phone={booking.phone_number}
-            date={booking.date}
-            startTime={booking.startTime}
-            endTime={booking.endTime}
-            status={booking.status}
-            bookingTables={booking.bookingTables.map((bt) => bt.table.id)}
-            price={booking.totalPrice}
-          />
-        ))}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {bookings.map((booking) => (
+              <BookingBox
+                key={booking.id}
+                id={booking.id}
+                fullname={booking.fullname}
+                phone={booking.phone_number}
+                date={booking.date}
+                startTime={booking.startTime}
+                endTime={booking.endTime}
+                status={booking.status}
+                bookingTables={booking.bookingTables.map((bt) => bt.table.id)}
+                price={booking.totalPrice}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       </TabsContent>
     </Tabs>
   );

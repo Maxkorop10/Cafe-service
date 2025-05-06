@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/shared/ui/dialog";
 import WaiterOrderDialog from "@/components/waiter-order-dialog";
+import { ScrollArea } from "@/shared/ui/scroll-area";
 
 type Order = {
   id: number;
@@ -135,19 +136,35 @@ export function WaiterOrdersList() {
       </TabsList>
 
       <TabsContent value="new" className="flex flex-col gap-3">
-        {renderOrdersByStatus("CREATED")}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {renderOrdersByStatus("CREATED")}
+          </div>
+        </ScrollArea>
       </TabsContent>
 
       <TabsContent value="in_progress" className="flex flex-col gap-3">
-        {renderOrdersByStatus("IN_PROGRESS")}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {renderOrdersByStatus("IN_PROGRESS")}
+          </div>
+        </ScrollArea>
       </TabsContent>
 
       <TabsContent value="completed" className="flex flex-col gap-3">
-        {renderOrdersByStatus("COMPLETED")}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {renderOrdersByStatus("COMPLETED")}
+          </div>
+        </ScrollArea>
       </TabsContent>
 
       <TabsContent value="rejected" className="flex flex-col gap-3">
-        {renderOrdersByStatus("REJECTED")}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {renderOrdersByStatus("REJECTED")}
+          </div>
+        </ScrollArea>
       </TabsContent>
     </Tabs>
   );

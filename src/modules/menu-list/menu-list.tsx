@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import MenuBox from "@/components/menu-box";
+import { ScrollArea } from "@/shared/ui/scroll-area";
 
 type MenuItem = {
   id: number;
@@ -41,45 +42,57 @@ export function MenuList() {
       </TabsList>
 
       <TabsContent value="meals" className="flex flex-col gap-3">
-        {menuData.meals.map((item) => (
-          <MenuBox
-            key={item.id}
-            id={item.id}
-            icon={item.imageUrl || "/placeholder.jpg"}
-            title={item.meal_name}
-            description={item.description}
-            weight={item.weight}
-            price={item.price}
-          />
-        ))}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {menuData.meals.map((item) => (
+              <MenuBox
+                key={item.id}
+                id={item.id}
+                icon={item.imageUrl || "/placeholder.jpg"}
+                title={item.meal_name}
+                description={item.description}
+                weight={item.weight}
+                price={item.price}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       </TabsContent>
 
       <TabsContent value="drinks" className="flex flex-col gap-3">
-        {menuData.drinks.map((item) => (
-          <MenuBox
-            key={item.id}
-            id={item.id}
-            icon={item.imageUrl || "/placeholder.jpg"}
-            title={item.meal_name}
-            description={item.description}
-            weight={item.weight}
-            price={item.price}
-          />
-        ))}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {menuData.drinks.map((item) => (
+              <MenuBox
+                key={item.id}
+                id={item.id}
+                icon={item.imageUrl || "/placeholder.jpg"}
+                title={item.meal_name}
+                description={item.description}
+                weight={item.weight}
+                price={item.price}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       </TabsContent>
 
       <TabsContent value="wine" className="flex flex-col gap-3">
-        {menuData.wine.map((item) => (
-          <MenuBox
-            key={item.id}
-            id={item.id}
-            icon={item.imageUrl || "/placeholder.jpg"}
-            title={item.meal_name}
-            description={item.description}
-            weight={item.weight}
-            price={item.price}
-          />
-        ))}
+        <ScrollArea className="h-[470px] w-full rounded-2xl border">
+          <div className="flex flex-col gap-2 p-2 mr-2">
+            {menuData.wine.map((item) => (
+              <MenuBox
+                key={item.id}
+                id={item.id}
+                icon={item.imageUrl || "/placeholder.jpg"}
+                title={item.meal_name}
+                description={item.description}
+                weight={item.weight}
+                price={item.price}
+              />
+            ))}
+          </div>
+        </ScrollArea>
       </TabsContent>
     </Tabs>
   );

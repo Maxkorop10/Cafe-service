@@ -11,7 +11,7 @@ export async function GET(
 
     if (isNaN(orderId)) {
       return NextResponse.json(
-        { error: "Недійсний ID замовлення" },
+        { error: "Unknown orderId for this request." },
         { status: 400 },
       );
     }
@@ -28,10 +28,7 @@ export async function GET(
     });
 
     if (!order) {
-      return NextResponse.json(
-        { error: "Замовлення не знайдено" },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
 
     const items = order.orderItems.map((item) => ({
@@ -47,7 +44,7 @@ export async function GET(
       items,
     });
   } catch (error) {
-    console.error("❌ Помилка при отриманні деталей замовлення:", error);
-    return NextResponse.json({ error: "Помилка сервера" }, { status: 500 });
+    console.error("❌ Failed to fetch details", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

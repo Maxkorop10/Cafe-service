@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/shared/ui/dialog";
 import { BookingForm } from "@/modules/booking-form";
+import { ScrollArea } from "@/shared/ui/scroll-area";
 
 type Booking = {
   id: number;
@@ -74,11 +75,19 @@ export function WaiterBookingList() {
         </TabsList>
 
         <TabsContent value="new" className="flex flex-col gap-3">
-          {renderBookingsByStatus("CREATED")}
+          <ScrollArea className="h-[470px] w-full rounded-2xl border">
+            <div className="flex flex-col gap-2 p-2 mr-2">
+              {renderBookingsByStatus("CREATED")}
+            </div>
+          </ScrollArea>
         </TabsContent>
 
         <TabsContent value="cancelled" className="flex flex-col gap-3">
-          {renderBookingsByStatus("CANCELLED")}
+          <ScrollArea className="h-[470px] w-full rounded-2xl border">
+            <div className="flex flex-col gap-2 p-2 mr-2">
+              {renderBookingsByStatus("CANCELLED")}
+            </div>
+          </ScrollArea>
         </TabsContent>
       </Tabs>
 
