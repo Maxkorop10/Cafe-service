@@ -54,6 +54,7 @@ export function BookingForm() {
   }, [user_name, reset]);
 
   const onSubmit = async (data: BookingSchema) => {
+    const localDate = `${data.date.getFullYear()}-${String(data.date.getMonth() + 1).padStart(2, "0")}-${String(data.date.getDate()).padStart(2, "0")}`;
     try {
       const response = await fetch("/api/bookings/create", {
         method: "POST",
@@ -65,7 +66,7 @@ export function BookingForm() {
           fullname: data.fullname,
           phone: data.phone,
           totalSum,
-          date: data.date.toISOString().split("T")[0],
+          date: localDate,
           start_time: data.start_time,
           end_time: data.end_time,
           tables: data.tables,
