@@ -66,24 +66,6 @@ export function WaiterOrdersList() {
     orders
       .filter((order) => order.status === status)
       .map((order) => (
-        // <WaiterOrderBox
-        //   key={order.id}
-        //   id={order.id}
-        //   fullname={order.fullname}
-        //   phone={order.phone_number}
-        //   status={order.status}
-        //   type={order.type}
-        //   booking_id={order.bookingId ?? undefined}
-        //   price={order.totalPrice}
-        //   in_process={order.status === "CREATED"}
-        //   completed={
-        //     order.status === "IN_PROGRESS" || order.status === "CREATED"
-        //   }
-        //   rejected={
-        //     order.status === "IN_PROGRESS" || order.status === "CREATED"
-        //   }
-        // />
-
         <Dialog key={order.id} modal={false}>
           <DialogTrigger asChild>
             <div onClick={() => fetchOrderDetails(order.id)}>

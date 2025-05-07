@@ -5,6 +5,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import OrderBox from "@/components/order-box";
 import BookingBox from "@/components/booking-box/booking-box";
 import { ScrollArea } from "@/shared/ui/scroll-area";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/shared/ui/dialog";
+import WaiterOrderDialog from "@/components/waiter-order-dialog";
 
 interface Order {
   id: number;
@@ -32,9 +40,21 @@ interface Booking {
   totalPrice: number;
 }
 
+type OrderDetails = {
+  id: number;
+  totalPrice: number;
+  items: {
+    mealName: string;
+    mealImg: string;
+    quantity: number;
+    price: number;
+  }[];
+};
+
 export function OrderingList() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -65,6 +85,52 @@ export function OrderingList() {
     fetchBookings();
   }, []);
 
+  const fetchOrderDetails = async (orderId: number) => {
+    try {
+      const res = await fetch(`/api/orders/order-details/${orderId}`);
+      const data = await res.json();
+      setOrderDetails(data);
+    } catch (error) {
+      console.error("❌ Failed to fetch order details", error);
+    }
+  };
+
+  const renderOrders = () =>
+    orders.map((order) => (
+      <Dialog key={order.id} modal={false}>
+        <DialogTrigger asChild>
+          <div onClick={() => fetchOrderDetails(order.id)}>
+            <OrderBox
+              id={order.id}
+              fullname={order.fullname}
+              phone={order.phone_number}
+              status={order.status}
+              type={order.type}
+              booking_id={order.bookingId ?? undefined}
+              price={order.totalPrice}
+            />
+          </div>
+        </DialogTrigger>
+        <DialogContent className="p-0 sm:max-w-sm z-50 bg-transparent shadow-none border-0">
+          <DialogTitle className="sr-only">Order details</DialogTitle>
+          <DialogDescription className="sr-only">
+            Список страв у замовленні
+          </DialogDescription>
+          {orderDetails && orderDetails.id === order.id && (
+            <WaiterOrderDialog
+              orderId={orderDetails.id}
+              items={orderDetails.items.map((item) => ({
+                meal_img: item.mealImg,
+                meal_name: item.mealName,
+                quantity: item.quantity,
+                price: item.price,
+              }))}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+    ));
+
   return (
     <Tabs defaultValue="meals" className="w-[550px]">
       <TabsList className="grid w-full grid-cols-2">
@@ -74,20 +140,7 @@ export function OrderingList() {
 
       <TabsContent value="orders" className="flex flex-col gap-3">
         <ScrollArea className="h-[470px] w-full rounded-2xl border">
-          <div className="flex flex-col gap-2 p-2 mr-2">
-            {orders.map((order) => (
-              <OrderBox
-                key={order.id}
-                id={order.id}
-                fullname={order.fullname}
-                phone={order.phone_number}
-                status={order.status}
-                type={order.type}
-                booking_id={order.bookingId ?? undefined}
-                price={order.totalPrice}
-              />
-            ))}
-          </div>
+          <div className="flex flex-col gap-2 p-2 mr-2">{renderOrders()}</div>
         </ScrollArea>
       </TabsContent>
 
