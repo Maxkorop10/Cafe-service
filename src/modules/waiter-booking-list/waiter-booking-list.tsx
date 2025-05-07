@@ -8,6 +8,7 @@ import { PlusCircle } from "lucide-react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "@/shared/ui/dialog";
@@ -100,6 +101,9 @@ export function WaiterBookingList() {
         </DialogTrigger>
         <DialogContent className="p-0 sm:max-w-sm z-50 bg-transparent shadow-none border-0">
           <DialogTitle className="sr-only">Create new booking</DialogTitle>
+          <DialogDescription className="sr-only">
+            Create new Booking
+          </DialogDescription>
           <BookingForm />
         </DialogContent>
       </Dialog>
