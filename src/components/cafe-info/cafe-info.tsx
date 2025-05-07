@@ -2,7 +2,7 @@ import { Clock4, Instagram, Mail, MapPin, Phone } from "lucide-react";
 
 export function CafeInfo() {
   const Info = [
-    { icon: Phone, name: "Phone", info: "+380664214510" },
+    { icon: Phone, name: "Phone", info: "+380664213510" },
     { icon: Mail, name: "Mail", info: "coffee2go@gmail.com" },
     { icon: Instagram, name: "Instagram", info: "@coffee2go" },
     { icon: Clock4, name: "Working time", info: "Mon-Sun: 09:00 — 22:00" },
