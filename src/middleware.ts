@@ -5,7 +5,7 @@ import { getToken } from "next-auth/jwt";
 const protectedRoutes = {
   USER: ["/menu-page", "/cart-page", "/booking-page", "/orders-page"],
   ADMIN: ["/waiter-orders", "/waiter-bookings"],
-  MANAGER: ["/manager-menu", "/manager-stats"],
+  MANAGER: ["/manager-staff", "/manager-stats"],
 };
 
 export async function middleware(req: NextRequest) {
@@ -48,7 +48,7 @@ export const config = {
     "/orders-page",
     "/waiter-orders",
     "/waiter-bookings",
-    "/manager-menu",
+    "/manager-staff",
     "/manager-stats",
   ],
 };

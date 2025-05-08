@@ -204,7 +204,6 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
             </p>
           )}
 
-          {/*!! -- Не забути замінити потім -- !!*/}
           {orderType === "TABLE" && (
             <div className="flex flex-col gap-1 w-60">
               <label
@@ -232,8 +231,6 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
               )}
             </div>
           )}
-
-          {/*!! -- Не забути замінити потім -- !!*/}
 
           <p className="font-bold text-sm text-gray-800 text-left">
             Summa: {totalPrice} грн.

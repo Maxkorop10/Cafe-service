@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { StaffRoles } from "@/modules/staff-roles";
 
 export const metadata: Metadata = {
-  title: "Menu",
+  title: "Staff",
 };
 
-export default function ManagerMenuPage() {
+export default function ManagerStaffPage() {
   return (
     <div className="py-4 px-5">
-      <p className="text-gray-50">Manager menu page!</p>
+      <StaffRoles />
     </div>
   );
 }

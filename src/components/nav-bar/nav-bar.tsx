@@ -30,7 +30,7 @@ export function NavBar() {
       { name: "Booking", href: "/waiter-bookings" },
     ],
     MANAGER: [
-      { name: "Menu", href: "/manager-menu" },
+      { name: "Staff", href: "/manager-staff" },
       { name: "Statistics", href: "/manager-stats" },
     ],
   };
