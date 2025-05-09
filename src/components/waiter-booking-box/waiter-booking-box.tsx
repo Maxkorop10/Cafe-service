@@ -14,6 +14,7 @@ const WaiterBookingBox: FC<BookingBoxProps> = ({
   bookingTables,
   cancelled,
   price,
+  onStatusChange,
 }) => {
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString("uk-UA", {
@@ -37,11 +38,27 @@ const WaiterBookingBox: FC<BookingBoxProps> = ({
       });
 
       toast.success("📜 Booking status is updated!");
+      onStatusChange?.(newStatus);
 
       if (!res.ok) throw new Error("Failed to update status");
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const statusClass =
+    {
+      CANCELLED: "border-red-300 bg-red-50 text-red-700 ",
+    }[status] || "border-gray-200 bg-gray-50 text-gray-700";
+
+  const priceClass =
+    {
+      CANCELLED: "text-gray-700 font-bold line-through",
+    }[status] || "text-gray-700 font-bold";
+
+  const statusLabels: Record<string, string> = {
+    CREATED: "Створено",
+    CANCELLED: "Скасовано",
   };
 
   return (
@@ -69,8 +86,12 @@ const WaiterBookingBox: FC<BookingBoxProps> = ({
           </div>
 
           <div className="flex flex-wrap gap-3 mt-1 text-sm text-gray-700">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border">
-              <span className="capitalize">{status}</span>
+            <div
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${statusClass}`}
+            >
+              <span className="capitalize">
+                {statusLabels[status] || status}
+              </span>
             </div>
             <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border border-gray-200 bg-gray-50">
               <Users size={14} />
@@ -91,7 +112,9 @@ const WaiterBookingBox: FC<BookingBoxProps> = ({
             )}
           </div>
 
-          <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-1">
+          <div
+            className={`flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-1 text-lg font-bold ${priceClass}`}
+          >
             <div className="text-lg text-gray-700 font-bold">{price} грн.</div>
           </div>
         </div>

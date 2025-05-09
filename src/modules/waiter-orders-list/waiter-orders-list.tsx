@@ -85,6 +85,19 @@ export function WaiterOrdersList() {
                 rejected={
                   order.status === "IN_PROGRESS" || order.status === "CREATED"
                 }
+                onStatusChange={(
+                  newStatus:
+                    | "CREATED"
+                    | "IN_PROGRESS"
+                    | "COMPLETED"
+                    | "REJECTED",
+                ) =>
+                  setOrders((prev) =>
+                    prev.map((u) =>
+                      u.id === order.id ? { ...u, status: newStatus } : u,
+                    ),
+                  )
+                }
               />
             </div>
           </DialogTrigger>
@@ -111,10 +124,10 @@ export function WaiterOrdersList() {
   return (
     <Tabs defaultValue="meals" className="w-[590px]">
       <TabsList className="grid w-full grid-cols-4">
-        <TabsTrigger value="new">New</TabsTrigger>
-        <TabsTrigger value="in_progress">In progress</TabsTrigger>
-        <TabsTrigger value="completed">Completed</TabsTrigger>
-        <TabsTrigger value="rejected">Rejected</TabsTrigger>
+        <TabsTrigger value="new">Нові</TabsTrigger>
+        <TabsTrigger value="in_progress">Готуються</TabsTrigger>
+        <TabsTrigger value="completed">Завершені</TabsTrigger>
+        <TabsTrigger value="rejected">Відхилені</TabsTrigger>
       </TabsList>
 
       <TabsContent value="new" className="flex flex-col gap-3">

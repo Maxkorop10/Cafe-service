@@ -81,8 +81,8 @@ const TableSelector: FC<TableSelectorProps> = ({ onSelect }) => {
                 </div>
               </HoverCardTrigger>
               <HoverCardContent className="w-fit h-fit">
-                <p>Capacity: {table.capacity}</p>
-                <p>Price: {table.price}₴</p>
+                <p>Вмістимість: {table.capacity}</p>
+                <p>Ціна: {table.price}₴</p>
               </HoverCardContent>
             </HoverCard>
           ))}

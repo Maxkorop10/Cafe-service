@@ -99,9 +99,9 @@ export function BookingForm() {
       <Card className="w-[400px] max-h-fit">
         <CardHeader>
           <CardTitle className="font-bold text-2xl text-gray-800 text-left">
-            Booking
+            Бронювання
           </CardTitle>
-          <CardDescription>Book your table</CardDescription>
+          <CardDescription>Забронюйте свій столик</CardDescription>
         </CardHeader>
 
         <CardContent className="flex justify-center items-center">
@@ -112,7 +112,7 @@ export function BookingForm() {
         </CardContent>
 
         <CardContent>
-          <p className="text-sm">Full Name</p>
+          <p className="text-sm">ПІБ</p>
           <Input
             {...register("fullname")}
             className="border-gray-400"
@@ -128,7 +128,7 @@ export function BookingForm() {
 
         <CardContent className="flex flex-row gap-4">
           <div className="w-7/12">
-            <p className="text-sm">Phone number</p>
+            <p className="text-sm">Номер телефону</p>
             <Input
               {...register("phone")}
               className="border-gray-400"
@@ -143,7 +143,7 @@ export function BookingForm() {
           </div>
 
           <div className="w-5/12">
-            <p className="text-sm">Data</p>
+            <p className="text-sm">Дата</p>
             <DatePicker
               onChange={(date) => setValue("date", date ?? new Date())}
             />
@@ -155,7 +155,7 @@ export function BookingForm() {
 
         <CardContent className="flex flex-row gap-4">
           <div className="w-1/3">
-            <p className="text-sm">Your table</p>
+            <p className="text-sm">Ваш столик</p>
             <TableSelector onSelect={handleTableSelect} />
             {errors.tables && (
               <p className="text-red-500 text-sm mt-2">
@@ -165,7 +165,7 @@ export function BookingForm() {
           </div>
 
           <div className="w-1/3">
-            <p className="text-sm">Start time</p>
+            <p className="text-sm">Початок</p>
             <Input
               {...register("start_time")}
               type="time"
@@ -181,7 +181,7 @@ export function BookingForm() {
           </div>
 
           <div className="w-1/3">
-            <p className="text-sm">End time</p>
+            <p className="text-sm">Кінець</p>
             <Input
               {...register("end_time")}
               type="time"
@@ -199,7 +199,7 @@ export function BookingForm() {
 
         <CardContent>
           <p className="text-black text-right text-lg font-medium">
-            Total sum: {totalSum} грн
+            Загальна сума: {totalSum} грн
           </p>
         </CardContent>
 
@@ -209,7 +209,7 @@ export function BookingForm() {
             className="w-full"
             disabled={selectedIndex === null || !isValid}
           >
-            Book
+            Забронювати
           </Button>
         </CardFooter>
       </Card>

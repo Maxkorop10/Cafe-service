@@ -36,9 +36,9 @@ export function MenuList() {
   return (
     <Tabs defaultValue="meals" className="w-[700px]">
       <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="meals">Meals</TabsTrigger>
-        <TabsTrigger value="drinks">Drinks</TabsTrigger>
-        <TabsTrigger value="wine">Wine</TabsTrigger>
+        <TabsTrigger value="meals">Страви</TabsTrigger>
+        <TabsTrigger value="drinks">Напої</TabsTrigger>
+        <TabsTrigger value="wine">Винна карта</TabsTrigger>
       </TabsList>
 
       <TabsContent value="meals" className="flex flex-col gap-3">

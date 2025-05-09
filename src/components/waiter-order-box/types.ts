@@ -9,4 +9,7 @@ export interface WaiterOrderBoxProps {
   completed: boolean;
   rejected: boolean;
   price: number;
+  onStatusChange: (
+    newStatus: "CREATED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED",
+  ) => void;
 }

@@ -41,7 +41,7 @@ export function GoogleMap() {
   return (
     <div
       ref={mapRef}
-      className="w-[280px] h-[225px] rounded-2xl shadow-md overflow-hidden"
+      className="w-[278.4px] h-[225px] rounded-2xl shadow-md overflow-hidden"
     />
   );
 }

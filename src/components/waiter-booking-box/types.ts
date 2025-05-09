@@ -9,4 +9,5 @@ export interface BookingBoxProps {
   bookingTables: number[];
   cancelled: boolean;
   price: number;
+  onStatusChange: (newStatus: "CREATED" | "CANCELLED") => void;
 }

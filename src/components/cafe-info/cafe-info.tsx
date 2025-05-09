@@ -2,16 +2,16 @@ import { Clock4, Instagram, Mail, MapPin, Phone } from "lucide-react";
 
 export function CafeInfo() {
   const Info = [
-    { icon: Phone, name: "Phone", info: "+380664213510" },
-    { icon: Mail, name: "Mail", info: "coffee2go@gmail.com" },
+    { icon: Phone, name: "Номер телефону", info: "+380664213510" },
+    { icon: Mail, name: "Пошта", info: "coffee2go@gmail.com" },
     { icon: Instagram, name: "Instagram", info: "@coffee2go" },
-    { icon: Clock4, name: "Working time", info: "Mon-Sun: 09:00 — 22:00" },
-    { icon: MapPin, name: "Location", info: "Cherkasy, Khreschatyk St., 29" },
+    { icon: Clock4, name: "Графік роботи", info: "Пн-Нд: 09:00 — 22:00" },
+    { icon: MapPin, name: "Локація", info: "Черкаси, вул. Хрещатик, 29" },
   ];
 
   return (
     <div className="bg-white p-4 px-5 rounded-2xl shadow-lg w-fit h-fit">
-      <h3 className="text-blue-600 font-bold text-xl mb-3">About us</h3>
+      <h3 className="text-blue-600 font-bold text-xl mb-3">Про нас</h3>
 
       <div className="grid grid-cols-1 gap-2 mb-1">
         {Info.map(({ icon: Icon, name, info }, index) => (

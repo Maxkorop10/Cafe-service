@@ -134,8 +134,8 @@ export function OrderingList() {
   return (
     <Tabs defaultValue="meals" className="w-[550px]">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="orders">Orders</TabsTrigger>
-        <TabsTrigger value="bookings">Bookings</TabsTrigger>
+        <TabsTrigger value="orders">Замовлення</TabsTrigger>
+        <TabsTrigger value="bookings">Бронювання</TabsTrigger>
       </TabsList>
 
       <TabsContent value="orders" className="flex flex-col gap-3">

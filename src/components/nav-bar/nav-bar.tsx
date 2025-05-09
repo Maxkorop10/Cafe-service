@@ -21,25 +21,25 @@ export function NavBar() {
 
   const navItems = {
     USER: [
-      { name: "Menu", href: "/menu-page" },
-      { name: "Cart", href: "/cart-page" },
-      { name: "Booking", href: "/booking-page" },
+      { name: "Меню", href: "/menu-page" },
+      { name: "Кошик", href: "/cart-page" },
+      { name: "Бронювання", href: "/booking-page" },
     ],
     ADMIN: [
-      { name: "Orders", href: "/waiter-orders" },
-      { name: "Booking", href: "/waiter-bookings" },
+      { name: "Замовлення", href: "/waiter-orders" },
+      { name: "Бронювання", href: "/waiter-bookings" },
     ],
     MANAGER: [
-      { name: "Staff", href: "/manager-staff" },
-      { name: "Statistics", href: "/manager-stats" },
+      { name: "Персонал", href: "/manager-staff" },
+      { name: "Статистика", href: "/manager-stats" },
     ],
-    SUPERADMIN: [{ name: "Users", href: "/superadmin-page" }],
+    SUPERADMIN: [{ name: "Користувачі", href: "/superadmin-page" }],
   };
 
   const dropdownItems = {
     USER: [
       <DropdownMenuItem key="orders">
-        <Link href="/orders-page">Orders</Link>
+        <Link href="/orders-page">Історія замовлень</Link>
       </DropdownMenuItem>,
       <DropdownMenuItem key="logout">
         <GoogleButton />

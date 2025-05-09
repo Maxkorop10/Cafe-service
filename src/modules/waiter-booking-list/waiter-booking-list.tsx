@@ -64,6 +64,13 @@ export function WaiterBookingList() {
           bookingTables={booking.bookingTables.map((bt) => bt.table.id)}
           price={booking.totalPrice}
           cancelled={booking.status === "CREATED"}
+          onStatusChange={(newStatus: "CREATED" | "CANCELLED") =>
+            setBookings((prev) =>
+              prev.map((u) =>
+                u.id === booking.id ? { ...u, status: newStatus } : u,
+              ),
+            )
+          }
         />
       ));
 
@@ -71,8 +78,8 @@ export function WaiterBookingList() {
     <div className="flex flex-col-2 gap-2">
       <Tabs defaultValue="meals" className="w-[590px]">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="new">New</TabsTrigger>
-          <TabsTrigger value="cancelled">Cancelled</TabsTrigger>
+          <TabsTrigger value="new">Усі</TabsTrigger>
+          <TabsTrigger value="cancelled">Скасовані</TabsTrigger>
         </TabsList>
 
         <TabsContent value="new" className="flex flex-col gap-3">
@@ -96,7 +103,7 @@ export function WaiterBookingList() {
         <DialogTrigger asChild>
           <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
             <PlusCircle className="h-5 w-5" />
-            Add new
+            Додати
           </Button>
         </DialogTrigger>
         <DialogContent className="p-0 sm:max-w-sm z-50 bg-transparent shadow-none border-0">

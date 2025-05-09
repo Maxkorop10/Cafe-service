@@ -141,7 +141,7 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
 
         <CardContent className="px-6 pb-2 flex flex-col gap-3">
           <div>
-            <p>Fullname</p>
+            <p>ПІБ</p>
             <Input
               {...register("fullname")}
               className="border-gray-400"
@@ -156,7 +156,7 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
           </div>
 
           <div>
-            <p>Phone</p>
+            <p>Номер телефону</p>
             <Input
               {...register("phone")}
               className="border-gray-400"
@@ -171,7 +171,7 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
           </div>
 
           <p className="font-bold text-sm text-gray-800 text-left">
-            Your type:
+            Тип замовлення:
           </p>
 
           <Controller
@@ -186,13 +186,13 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="TAKEAWAY" id="r1" />
                   <Label htmlFor="r1" className="font-normal cursor-pointer">
-                    Takeaway
+                    З собою
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="TABLE" id="r2" />
                   <Label htmlFor="r2" className="font-normal cursor-pointer">
-                    Table
+                    Є столик
                   </Label>
                 </div>
               </RadioGroup>
@@ -210,14 +210,14 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
                 htmlFor="booking"
                 className="text-sm font-medium text-gray-700"
               >
-                Your Booking
+                Ваші бронювання
               </label>
               <select
                 id="booking"
                 {...register("booking")}
                 className="border border-gray-300 rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               >
-                <option value="">Select Booking</option>
+                <option value="">Оберіть бронювання</option>
                 {bookings.map((booking) => (
                   <option key={booking.id} value={booking.id}>
                     {new Date(booking.date).toLocaleString()}
@@ -233,7 +233,7 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
           )}
 
           <p className="font-bold text-sm text-gray-800 text-left">
-            Summa: {totalPrice} грн.
+            Сума: {totalPrice} грн.
           </p>
         </CardContent>
         <CardFooter>
@@ -243,7 +243,7 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
               className="w-full"
               disabled={selectedIndex === null || !isValid}
             >
-              Pay
+              Оплатити
             </Button>
           </DialogClose>
         </CardFooter>

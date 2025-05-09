@@ -22,7 +22,7 @@ export function CartItems() {
     <div className="w-full flex flex-col gap-4 p-4">
       {items.length === 0 && (
         <p className="text-white text-center text-lg font-medium">
-          The Cart is empty
+          Кошик порожній
         </p>
       )}
 
@@ -82,7 +82,7 @@ export function CartItems() {
 
       <Separator />
       <p className="text-white text-right text-lg font-medium">
-        Total sum: {totalPrice} грн
+        Загальна сума: {totalPrice} грн
       </p>
       <Separator />
 
@@ -93,7 +93,7 @@ export function CartItems() {
             className="bg-blue-500 text-white hover:bg-blue-600 text-lg rounded-2xl h-12"
             disabled={items.length === 0}
           >
-            Create order
+            Створити замовлення
           </Button>
         </DialogTrigger>
         <DialogContent className="p-0 sm:max-w-sm">
