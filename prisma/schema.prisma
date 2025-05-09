@@ -137,6 +137,7 @@ enum Role {
   USER
   ADMIN
   MANAGER
+  SUPERADMIN
 }
 
 enum BookingStatus {

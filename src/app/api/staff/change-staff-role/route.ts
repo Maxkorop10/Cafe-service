@@ -8,13 +8,14 @@ const secret = process.env.NEXTAUTH_SECRET;
 export async function PATCH(req: NextRequest) {
   const token = await getToken({ req, secret });
 
-  if (!token || token.role !== "MANAGER") {
+  if (!token || token.role !== "SUPERADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const { userId, newRole } = await req.json();
+  const allowedRoles = ["USER", "MANAGER", "ADMIN"];
 
-  if (!["USER", "MANAGER"].includes(newRole)) {
+  if (!allowedRoles.includes(newRole)) {
     return NextResponse.json({ error: "Invalid role" }, { status: 400 });
   }
 

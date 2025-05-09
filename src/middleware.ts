@@ -6,6 +6,7 @@ const protectedRoutes = {
   USER: ["/menu-page", "/cart-page", "/booking-page", "/orders-page"],
   ADMIN: ["/waiter-orders", "/waiter-bookings"],
   MANAGER: ["/manager-staff", "/manager-stats"],
+  SUPERADMIN: ["/superadmin-page"],
 };
 
 export async function middleware(req: NextRequest) {
@@ -19,7 +20,11 @@ export async function middleware(req: NextRequest) {
       return NextResponse.next();
     }
 
-    if (token.role === "ADMIN" || token.role === "MANAGER") {
+    if (
+      token.role === "ADMIN" ||
+      token.role === "MANAGER" ||
+      token.role === "SUPERADMIN"
+    ) {
       return NextResponse.redirect(new URL("/", req.url));
     }
   }
@@ -50,5 +55,6 @@ export const config = {
     "/waiter-bookings",
     "/manager-staff",
     "/manager-stats",
+    "/superadmin-page",
   ],
 };

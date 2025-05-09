@@ -33,6 +33,7 @@ export function NavBar() {
       { name: "Staff", href: "/manager-staff" },
       { name: "Statistics", href: "/manager-stats" },
     ],
+    SUPERADMIN: [{ name: "Users", href: "/superadmin-page" }],
   };
 
   const dropdownItems = {
@@ -50,6 +51,11 @@ export function NavBar() {
       </DropdownMenuItem>,
     ],
     MANAGER: [
+      <DropdownMenuItem key="logout">
+        <GoogleButton />
+      </DropdownMenuItem>,
+    ],
+    SUPERADMIN: [
       <DropdownMenuItem key="logout">
         <GoogleButton />
       </DropdownMenuItem>,
