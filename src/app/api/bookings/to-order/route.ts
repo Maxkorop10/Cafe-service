@@ -16,6 +16,7 @@ export async function GET(req: Request) {
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const now = new Date();
 
     const bookings = await prisma.booking.findMany({
       where: {
@@ -23,6 +24,9 @@ export async function GET(req: Request) {
         status: "CREATED",
         date: {
           gte: today,
+        },
+        endTime: {
+          gte: now,
         },
       },
       orderBy: {

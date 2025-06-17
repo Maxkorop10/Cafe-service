@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 type Booking = {
   id: string;
   date: string;
+  startTime: string;
   bookingTables: {
     table: {
       id: string;
@@ -236,7 +237,14 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
                 <option value="">Оберіть бронювання</option>
                 {bookings.map((booking) => (
                   <option key={booking.id} value={booking.id}>
-                    {new Date(booking.date).toLocaleString()}
+                    {new Date(booking.startTime).toLocaleString("en-US", {
+                      month: "numeric",
+                      day: "numeric",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false,
+                    })}
                   </option>
                 ))}
               </select>
