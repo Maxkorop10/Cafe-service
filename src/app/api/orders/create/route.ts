@@ -21,14 +21,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    // if (totalPrice <= 0) {
-    //   return NextResponse.json({ message: "Total price is invalid" });
-    // }
-
-    // if (items.filter(item => item.quantity <= 0).length > 0) {
-    //   return NextResponse.json({ message: "Quantity can't be zero or lower" });
-    // }
-
     const createdOrder = await prisma.order.create({
       data: {
         userId: user.id,
