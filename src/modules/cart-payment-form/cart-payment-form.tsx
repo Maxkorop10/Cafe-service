@@ -86,6 +86,16 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
     };
 
     try {
+      if (totalPrice <= 0) {
+        toast.error("Total sum can't be zero!");
+        return;
+      }
+
+      if (items.filter((item) => item.quantity <= 0).length > 0) {
+        toast.error("Quantity can't be zero or lower");
+        return;
+      }
+
       const res = await fetch("/api/orders/create", {
         method: "POST",
         headers: {
@@ -93,6 +103,12 @@ const CartPaymentForm: FC<CartPaymentFormProps> = ({ totalPrice, items }) => {
         },
         body: JSON.stringify(payload),
       });
+
+      if (totalPrice <= 0) {
+        const error = await res.json();
+        toast.error("Total sum can't be zero!", error.message);
+        return;
+      }
 
       if (!res.ok) {
         const error = await res.json();

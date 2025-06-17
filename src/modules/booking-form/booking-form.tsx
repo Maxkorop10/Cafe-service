@@ -16,14 +16,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { bookingSchema, BookingSchema } from "@/modules/booking-form/schema";
 import TableSelector from "@/components/table-selector";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BankPicker from "@/components/bank-picker";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export function BookingForm() {
   const { data: session } = useSession();
-  const user_name = session?.user?.name;
+  // const user_name = session?.user.name;
   const [totalSum, setTotalSum] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const {
@@ -35,9 +35,6 @@ export function BookingForm() {
   } = useForm<BookingSchema>({
     mode: "all",
     resolver: zodResolver(bookingSchema),
-    defaultValues: {
-      fullname: "",
-    },
   });
 
   const handleTableSelect = (tables: number[], prices: number[]) => {
@@ -47,11 +44,11 @@ export function BookingForm() {
   };
 
   const router = useRouter();
-  useEffect(() => {
-    if (user_name) {
-      reset({ fullname: user_name });
-    }
-  }, [user_name, reset]);
+  // useEffect(() => {
+  //   if (user_name) {
+  //     reset({ fullname: user_name });
+  //   }
+  // }, [user_name, reset]);
 
   const onSubmit = async (data: BookingSchema) => {
     const localDate = `${data.date.getFullYear()}-${String(data.date.getMonth() + 1).padStart(2, "0")}-${String(data.date.getDate()).padStart(2, "0")}`;
@@ -62,7 +59,7 @@ export function BookingForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: session?.user?.id,
+          userId: session?.user.id,
           fullname: data.fullname,
           phone: data.phone,
           totalSum,
