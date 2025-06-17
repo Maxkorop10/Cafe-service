@@ -12,8 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/ui/dialog";
-import { BookingForm } from "@/modules/booking-form";
 import { ScrollArea } from "@/shared/ui/scroll-area";
+import { WaiterBookingForm } from "@/modules/waiter-booking-form";
 
 type Booking = {
   id: number;
@@ -111,7 +111,7 @@ export function WaiterBookingList() {
           <DialogDescription className="sr-only">
             Create new Booking
           </DialogDescription>
-          <BookingForm />
+          <WaiterBookingForm />
         </DialogContent>
       </Dialog>
     </div>

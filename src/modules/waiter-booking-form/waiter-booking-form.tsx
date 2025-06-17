@@ -13,17 +13,21 @@ import { Input } from "@/shared/ui/input";
 import { DatePicker } from "@/shared/ui/date-picker";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { bookingSchema, BookingSchema } from "@/modules/booking-form/schema";
+
 import TableSelector from "@/components/table-selector";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import BankPicker from "@/components/bank-picker";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  WaiterBookingSchema,
+  waiterBookingSchema,
+} from "@/modules/waiter-booking-form/schema";
 
-export function BookingForm() {
+export function WaiterBookingForm() {
   const { data: session } = useSession();
-  const [totalSum, setTotalSum] = useState(0);
+  const totalSum = 0;
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const {
     handleSubmit,
@@ -31,20 +35,18 @@ export function BookingForm() {
     setValue,
     reset,
     formState: { errors, isValid },
-  } = useForm<BookingSchema>({
+  } = useForm<WaiterBookingSchema>({
     mode: "all",
-    resolver: zodResolver(bookingSchema),
+    resolver: zodResolver(waiterBookingSchema),
   });
 
-  const handleTableSelect = (tables: number[], prices: number[]) => {
+  const handleTableSelect = (tables: number[]) => {
     setValue("tables", tables);
-    const sum = prices.reduce((acc, price) => acc + price, 0);
-    setTotalSum(sum);
   };
 
   const router = useRouter();
 
-  const onSubmit = async (data: BookingSchema) => {
+  const onSubmit = async (data: WaiterBookingSchema) => {
     const localDate = `${data.date.getFullYear()}-${String(data.date.getMonth() + 1).padStart(2, "0")}-${String(data.date.getDate()).padStart(2, "0")}`;
     try {
       const response = await fetch("/api/bookings/create", {
@@ -186,12 +188,6 @@ export function BookingForm() {
               </p>
             )}
           </div>
-        </CardContent>
-
-        <CardContent>
-          <p className="text-black text-right text-lg font-medium">
-            Загальна сума: {totalSum} грн
-          </p>
         </CardContent>
 
         <CardFooter>
